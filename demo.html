@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body ng-app="app" >
+    <div ng-controller="controller">
+        <input type="text"  placeholder="nihao" ng-model="name">
+        <p ng-bind="name"></p>
+        <p>{{name}}</p>
+        <p>{{date|date:'yyyy-MM-dd hh:mm:ss'}}</p>
+        <p>{{12|currency:'￥'}}</p>
+        <p>{{ch| filter : 'a'}} </p>
+        <p>{{tt|orderBy:aa}}</p>
+        
+    </div>
+   
+    <script src="angular.min.js"></script>
+    <script>
+        var app = angular.module("app",[]);
+        app.controller("controller",["$scope","$interval",function($scope,$interval){
+            $scope.date= new Date(),
+            $scope.name="";
+            // setInterval(function(){
+            //     $scope.$apply(function(){
+            //     $scope.date= new Date();
+            // })
+            // },1000)
+            $interval(function(){
+                $scope.date= new Date();
+            },1000)
+            $scope.ch= [
+            {name:'kimi',age:3},
+            {name:'cindy',age:4},
+            {name:'anglar',age:4},
+            {name:'shitou',age:6},
+            {name:'tiantian',age:5}
+            ];
+            $scope.tt = [5,3,6,4,7,8]
+            function aa(a,b){
+                    return a>b;
+            }
+        }])
+        //angular 1.3版本之后就不能用了
+        // function controller($scope){
+        //     $scope.name=''
+           
+        // }
+    </script>
+</body>
+</html>

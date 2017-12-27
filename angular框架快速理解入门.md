@@ -88,35 +88,7 @@ ng-selected下拉框表单选中
 > 2. 其中ng-bind和{{}}都是绑定数据用的，{{}}是ng-bind的简写，通过“{{}}”绑定数据时会
 有“闪烁”现象，添加ng-cloak也可以解决“闪烁”现象，通过ng-bind-template可以绑定多个数据。
 > 3. 通过表单元素添加ng-model指令实现视图（View）模版向模型（Model）数据绑定
-<pre>
-  <!DOCTYPE html>
- <html lang="en" >
- <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
- </head>
- <body ng-app="app" >
-    <div ng-controller="controller">
-        <input type="text"  placeholder="nihao" ng-model="name">
-        <p ng-bind="name"></p>
-        <p>{{name}}</p>
-    </div>
-    <script src="angular.min.js"></script>
-    <script>
-        var app = angular.module("app",[]);
-        app.controller("controller",["$scope",function($scope){
-            $scope.name="";
-        }])
 
-        //angular 1.3版本之后就不支持全局控制器了
-        // function controller($scope){
-        //     $scope.name=''
-           
-        // }
-    </script>
- </body>
- </html>
-</pre>
 ## Angular中的作用域
 简单来说就是app不能嵌套controller可以嵌套，每个控制器（Controller）又都对应一个模型（Model）也就是$scope对象，
 不同层级控制器（Controller）下的$scope便产生了作用域。
@@ -124,11 +96,6 @@ ng-selected下拉框表单选中
 ### 根作用域
 一个AngularJS的应用在启动时会自动创建一个根作用域$rootScope，这个根作用域在整个应用范围（ng-app所在标签以内）都可以访问
 //ng-init可以为根作用域添加数据，这个数据在此app范围下都能访问到
-<pre>
-<div ng-app="app" ng-init="name='wbj'">
-    <p>{{name}}</p>
-</div>
-</pre>
 ### 子作用域
 通过ng-controller指令可以创建一个子作用域，新建的作用域可以访问其父作用域的数据
 
@@ -279,20 +246,10 @@ ng-selected下拉框表单选中
   }])
 </pre>
 ## 自定义服务
+<pre>
 通过上面例子得知，所谓服务是将一些通用性的功能逻辑进行封装方便使用，
 AngularJS允许将自定义服务。
-1.factory方法作用就是返回一个有属性有方法的对象
- <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<script src="anglar.min.js"></script>
-</head>
-<body>
-<div ng-app="myApp" ng-controller="myCtrl">
-    <p>{{r}}</p>
-</div>
-
+ 1.factory方法作用就是返回一个有属性有方法的对象
 <script>
     //创建模型
     var app = angular.module('myApp', []);
@@ -378,8 +335,9 @@ app.value('服务名'，'对应的常量值')
             //alert(data)
         });
     });
-
-###配置块
+</pre>
+<h3> 配置块</h3>
+<pre>
 通过config方法实现对模块的配置，AngularJS中的服务大部分都对应一个“provider”，
   用来执行与对应服务相同的功能或对其进行配置。
   比如$log、$http、$location都是内置服务，相对应的“provider”分别是
@@ -388,7 +346,9 @@ app.value('服务名'，'对应的常量值')
   app.config(['$logProvider',function($log){
     $log.debugEnabled(false);
   }])
-###运行块
+</pre>  
+<h3>运行块</h3>
+<pre>
 服务也是模块形式存在的对且对外提供特定功能，前面学习中都是将服务做为依赖注入进去的，
 然后再进行调用，除了这种方式外我们也可以直接运行相应的服务模块，AngularJS提供了run方法来实现
 app.run(['$http','$rootScope',function($http,$rootScope){
@@ -401,24 +361,28 @@ app.run(['$http','$rootScope',function($http,$rootScope){
 }])
 不但如此，run方法还是最先执行的，利用这个特点我们可以将一些需要优先执行的功能通过run方法来运行，
 比如验证用户是否登录，未登录则不允许进行任何其它操作。
-##路由（写了这么久终于到路由了）
-一个应用是由若个视图组合而成的，根据不同的业务逻辑展示给用户不同的视图，路由则是实现这一功能的关键。
-###SPA
-  SPA（Single Page Application)指的是单一页面展示所有功能，通过Ajax动态获取数据然后进行实时渲染，
+</pre>
+<h2>路由（写了这么久终于到路由了）</h2>
+ 一个应用是由若个视图组合而成的，根据不同的业务逻辑展示给用户不同的视图，路由则是实现这一功能的关键。
+<h3> SPA </h3>
+ SPA（Single Page Application)指的是单一页面展示所有功能，通过Ajax动态获取数据然后进行实时渲染，
 结合CSS3动画模仿原生App交互，然后再进行打包（使用工具把Web应用包一个壳，这个壳本质上是浏览器）变成一个“原生”应用。
   在PC端也有广泛的应用，通常情况下使用Ajax异步请求数据，然后实现内容局部刷新，局部刷新的本质是动态生成DOM，
   新生成的DOM元素并没有真实存在于文档中，所以当再次刷新页面时新添加的DOM元素会“丢失”，通过单页面应可以很好的解决这个问题。
-###路由 
+<h3> 路由 </h3>
+<pre>
  1. 在后端开发中通过URL地址可以实现页面（视图）的切换，但是AngularJS是一个纯前端MVC框架，在开发单页面应用时，所有功能都在同一页面完成，所以无需切换URL地址（即不允许产生跳转），
   但Web应用中又经常通过链接（a标签）来更新页面（视图），当点击链接时还要阻止其向服务器发起请求，通过锚点（页内跳转）可以实现这一点。
    实现单页面应用需要具备：
     a、只有一页面
     b、链接使用锚点
 
-2.单一页面中可以能过hashchange事件监听到锚点的变化，进而可以实现为不同的锚点准不同的视图，
+ 2. 单一页面中可以能过hashchange事件监听到锚点的变化，进而可以实现为不同的锚点准不同的视图，
   单页面应用就是基于这一原理实现的。
   AngularJS对这一实现原理进行了封装，将锚点的变化封装成路由（Route）,这是与后端路由的根本区别
-####使用方法
+</pre>  
+#### 使用方法
+<pre>
 1.引入angular-route.js(注意先引angular.js)  
  //Angular核心
  <script src="angular.min.js"></script>
@@ -435,23 +399,22 @@ app.run(['$http','$rootScope',function($http,$rootScope){
      template:'起名字'
    })
  })
- 
  4布局模版：ng-view是占位用的路由配置的视图会被加载到相应位置
  通过ng-view指令布局模板，路由匹配的视图会被加载渲染到些区域。
-  <div ng-view></div>
-###路由参数
-1、提供两个方法匹配路由，分别是when和otherwise，when方法需要两个参数，otherwise方法做为when方法的补充只需要一个参数，其中when方法可以被多次调用。
-2、第1个参数是一个字符串，代表当前URL中的hash值。
-3、第2个参数是一个对象，配置当前路由的参数，如视图、控制器等。
+ </pre> 
+### 路由参数
+> 1. 提供两个方法匹配路由，分别是when和otherwise，when方法需要两个参数，otherwise方法做为when方法的补充只需要一个参数，其中when方法可以被多次调用。
+> 2. 第1个参数是一个字符串，代表当前URL中的hash值。
+> 3. 第2个参数是一个对象，配置当前路由的参数，如视图、控制器等。
 	a、template 字符串形式的视图模板
 	b、templateUrl 引入外部视图模板
 	c、controller 视图模板所属的控制器
 	d、redirectTo跳转到其它路由
 
-##补充
+## 补充
 jquery:在没有引入jQuery的前提下AngularJS实现了简版的jQuery Lite，通过angular.element不能选择元素，
   但可以将一个DOM元素转成jQuery对象，如果引提前引入了jQuery则angular.element则完全等于jQuery。
-###Angular常遇到的问题
+### Angular常遇到的问题
 Q1.<div ng-include="views/user/show.html"></div> 错在哪里？
 如果你这么写过，会发现这个位置啥也没有加载出来，那么，错在哪里呢？错在ng-include需要的是一个变量，
 如果你在$scope中有这样一个变量 $scope.userShowTemplateUrl = "views/users/show.html"，并且把上面这句变为<div ng-include="userShowTemplateUrl"></div>就能正常工作了。

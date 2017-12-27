@@ -78,7 +78,7 @@ ng-selected下拉框表单选中
        //是否替换标签,默认是false这里你就记住写true把，他会把你自定义的指令标签替换掉
        replace:true,
        //指令模版
-       template：'<h1>可以是任何东西、标签、函数，或者页面</h1>'
+       template：'可以是任何东西、标签、函数，或者页面'
 
      }
    })
@@ -101,7 +101,6 @@ ng-selected下拉框表单选中
         <p ng-bind="name"></p>
         <p>{{name}}</p>
     </div>
-    
     <script src="angular.min.js"></script>
     <script>
         var app = angular.module("app",[]);

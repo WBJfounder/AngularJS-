@@ -10,13 +10,15 @@
 > 1. 首先说说Angular是一个JS框架大家应该知道的。它可以通过<script>标签添加到HTML页面
 > 2. 再来说说它的优缺点
 > 2.1. 优点呢
- ｛
+<pre>	
+{
    > 1. 模版功能强大丰富，自带丰富的Angular指令
    > 2. 是一个比较完善前端MVC框架，包括模版，数据双向绑定，路由，模块化，服务，过滤器，
      依赖注入功能；
    > 3. 自定义指令，比较灵活满足大多数的需求
    > 4. ng模块化比较大胆的引入java中的东西（就是依赖注入）使代码复用性强      
- ｝
+ }
+ </pre>
  > 2.2缺点呢
   ｛
     > 1. 验证功能错误信息显示比较薄弱，需要写很多模版标签
@@ -24,7 +26,7 @@
      模块独立了出去
     > 3. 这次从1.0升级到2.0版本，改动特别大，没有完美兼容低版本，升级后可能会导致一个兼容新的bug
    ｝
-##下面就开始开始angular的旅程
+## 下面就开始开始angular的旅程
 1.定义应用是使用angular的开始通过给HTML页面上的标签添加ng-app属性，它所包裹的范围都属于此应用
  例如：<html lang='en' ng-app='app'>表示整个页面文档都为此应用区域
 2.定义模块：利用Angular提供的全局对象angular中的方法，angular-module()来定义一个模块
@@ -33,7 +35,7 @@
 3.定义控制器：
  控制器（Controller）作为连接模型（Model）和视图（View）的桥梁存在，所以当我们定义好了控制器以后也就定义好了模型和视图。
  例如：app.controller('控制器名称（用英文）'，['$scope'，function()}])
-##angular中的内置指令 
+## angular中的内置指令 
 ng-app 指定应用根元素，至少有一个元素指定了此属性。
 ng-init 初始化一个Angular应用程序的数据
 ng-model 指令定义在AngularJS应用中使用的模型/变量
@@ -54,9 +56,10 @@ ng-disabled表单禁用
 ng-readonly表单只读
 ng-checked单/复选框表单选中
 ng-selected下拉框表单选中
-##angular中强大的自定义指令可以帮你增添便利
-###angular中根据实际业务需要自定义指令，通过angular全局对象下的directive方法实现
+## angular中强大的自定义指令可以帮你增添便利
+### angular中根据实际业务需要自定义指令，通过angular全局对象下的directive方法实现
  语法格式：
+<pre>	
    var app  = angular.module('app',[]);
    //tag位置可以写自己定义的指令名称
    app.directive('tag',function(){
@@ -75,7 +78,8 @@ ng-selected下拉框表单选中
 
      }
    })
-##数据绑定angularjs中的重点之一
+</pre>   
+## 数据绑定angularjs中的重点之一
 1.提到绑定就要想到的（ng-bind、ng-model、{{}})
 2.其中ng-bind和{{}}都是绑定数据用的，{{}}是ng-bind的简写，通过“{{}}”绑定数据时会
 有“闪烁”现象，添加ng-cloak也可以解决“闪烁”现象，通过ng-bind-template可以绑定多个数据。
@@ -109,24 +113,24 @@ ng-selected下拉框表单选中
  </body>
  </html>
 
-##Angular中的作用域
+## Angular中的作用域
 简单来说就是app不能嵌套controller可以嵌套，每个控制器（Controller）又都对应一个模型（Model）也就是$scope对象，
 不同层级控制器（Controller）下的$scope便产生了作用域。
 
-###根作用域
+### 根作用域
 一个AngularJS的应用在启动时会自动创建一个根作用域$rootScope，这个根作用域在整个应用范围（ng-app所在标签以内）都可以访问
 //ng-init可以为根作用域添加数据，这个数据在此app范围下都能访问到
 <div ng-app="app" ng-init="name='wbj'">
     <p>{{name}}</p>
 </div>
 
-###子作用域
+### 子作用域
 通过ng-controller指令可以创建一个子作用域，新建的作用域可以访问其父作用域的数据
 
-##过滤器
+## 过滤器
 在AngularJS中使用过滤器格式化展示数据，在"{{}}"中使用“|”来调用过滤器，使用“：”传递参数
 
-###内置过滤器
+### 内置过滤器
 1.currency将数值格式化为货币格式
  <p>{{12|currency:'￥'}}</p>
 2.date 日期格式化
@@ -160,7 +164,7 @@ ng-selected下拉框表单选中
 9.orderBy对数组进行排序，第二个参数可控制方向
  { 数组 | orderBy : 自己指定 }}
 
-###自定义过滤器
+### 自定义过滤器
 除了使用AngularJS内建过滤器外，还可以根业务需要自定义过滤器，
 通过模块对象实例提供的filter方法自定义过滤器。
  app.filter('自定义名称',function(){
@@ -168,12 +172,12 @@ ng-selected下拉框表单选中
       return 处理好的数据
     }
  })
-##依赖注入功能；
+## 依赖注入功能；
 1.Angular采用模块化的方式组织代码，将一些通用逻辑封装成一个对象或者函数，实现最大程度上的复用
  这导致了使用者和被使用者之间存在依赖关系
 2.所谓依赖注入是指在运行时自动查找依赖关系，然后将查找到依赖传递给使用者的一种机制
 3.常见的angularjs内置服务有$http、$location、$timeout、$rootScope等
-###推断是注入（不推荐）
+### 推断是注入（不推荐）
 //没有明确声明依赖，AngularJS会将函数参数名称当成是依赖的名称
  app.controller('demoController',function($http){
   $http({
@@ -183,7 +187,7 @@ ng-selected下拉框表单选中
   })
  })
   这种方式带来的一个问题，当代码经过gulp压缩之后函数参数也被压缩，这样就会造成无法依赖
-###行内注入(推荐)
+### 行内注入(推荐)
 以数组形式明确声明依赖，数组元素都是包含依赖名称的字符串，数组最后一个元素是依赖注入的目标函数
  app.controller('hangneiComtroller',['$http',function($http){
    $http({
@@ -193,11 +197,11 @@ ng-selected下拉框表单选中
    })
  }]) 
 
-##服务
+## 服务
 服务是一个对象或者函数，对外提供特定的功能
-###内置服务
+### 内置服务
 
-1.$location是对原生Javascript中location对象属性和方法的封装
+> 1.$location是对原生Javascript中location对象属性和方法的封装
  app.controller('demoController',['$scope','$location',function($scope,$location){
    //绝对路径
    $scope.absUrl = $location.absUrl();
@@ -213,7 +217,7 @@ ng-selected下拉框表单选中
    $scope.search = $location.search();
  }]) 
 
- 2. $filter在控制其中格式化数据(鸡肋用不上)
+ > 2. $filter在控制其中格式化数据(鸡肋用不上)
    app.controller('demoController',['$scope','filter',function($scope,$filter){
      //原始信息
      $scope.content = 'my name is WBJ ';
@@ -223,7 +227,7 @@ ng-selected下拉框表单选中
     $scope.content = uppercase($scope.content);
    }])
 
- 3.$timeout和$interval对原生js中的setTimeout和setInterval进行了封装
+ > 3.$timeout和$interval对原生js中的setTimeout和setInterval进行了封装
    app.controller('demoController',['$scope','$timeout','$interval',function($scope,
    $timeout,$interval){
      $timeout(function(){
@@ -234,7 +238,7 @@ ng-selected下拉框表单选中
      },1000)
    }]) 
 
-  4.$log打印调试信息
+>  4.$log打印调试信息
   //启用日志服务
   app.controller('demoController',['$scope','$log',function($scope,$log){
     $log.log('日志');
@@ -244,7 +248,7 @@ ng-selected下拉框表单选中
     $log.debug('调试')；
   }]) 
 
-  5.$http用于向服务器发起异步请求（重点）
+ > 5.$http用于向服务器发起异步请求（重点）
   //使用$http服务
   app.controller('demoController',['$scope','$http',function($scope,$http){
     //发起异步请求
@@ -263,7 +267,7 @@ ng-selected下拉框表单选中
     })
   }])
 
-##自定义服务
+## 自定义服务
 通过上面例子得知，所谓服务是将一些通用性的功能逻辑进行封装方便使用，
 AngularJS允许将自定义服务。
 1.factory方法作用就是返回一个有属性有方法的对象
